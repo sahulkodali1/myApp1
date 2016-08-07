@@ -1,13 +1,20 @@
 package com.myApp1.Model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.hibernate.validator.constraints.NotBlank;
@@ -20,7 +27,7 @@ public class Course implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int courseId;
-	
+
 	@NotBlank(message = "coursename shouldnt be blank")
 	private String courseName;
 
@@ -32,6 +39,13 @@ public class Course implements Serializable {
 
 	@Enumerated(EnumType.STRING)
 	private Skilllevel skillLevel;
+
+	@ManyToMany(cascade = { CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH })
+	@JoinTable(name = "course_user", joinColumns = @JoinColumn(name = "courseId", referencedColumnName = "courseId"), inverseJoinColumns = @JoinColumn(name = "userName", referencedColumnName = "userName"))
+	private List<User> user = new ArrayList<>();
+
+	@OneToMany(mappedBy = "Topic", cascade = CascadeType.ALL)
+	private List<Topic> topics = new ArrayList<>();
 
 	public Course(int courseId, String courseName, String aUthor, String dEscription, Skilllevel skillLevel) {
 		super();
@@ -81,6 +95,23 @@ public class Course implements Serializable {
 	public void setSkillLevel(Skilllevel skillLevel) {
 		this.skillLevel = skillLevel;
 	}
+	
+
+	public List<User> getUser() {
+		return user;
+	}
+
+	public void setUser(List<User> user) {
+		this.user = user;
+	}
+
+	public List<Topic> getTopics() {
+		return topics;
+	}
+
+	public void setTopics(List<Topic> topics) {
+		this.topics = topics;
+	}
 
 	@Override
 	public int hashCode() {
@@ -108,5 +139,5 @@ public class Course implements Serializable {
 	public String toString() {
 		return "Course [courseId=" + courseId + "]";
 	}
-	
+
 }

@@ -2,9 +2,12 @@ package com.myApp1.Model;
 
 import java.io.Serializable;
 import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Pattern;
 
@@ -43,6 +46,9 @@ public class User implements Serializable {
 
 	private String company;
 	private Long phoneNumber;
+
+	@ManyToMany(mappedBy = "users")
+	private List<Course> courses = new ArrayList<>();
 
 	public User(String userName, String passWord, LocalTime createTime, LocalTime updateTime, String firstName,
 			String lastName, String middleName, String company, Long phoneNumber) {
@@ -128,6 +134,14 @@ public class User implements Serializable {
 
 	public void setPhoneNumber(Long phoneNumber) {
 		this.phoneNumber = phoneNumber;
+	}
+
+	public List<Course> getCourses() {
+		return courses;
+	}
+
+	public void setCourses(List<Course> courses) {
+		this.courses = courses;
 	}
 
 	/*
