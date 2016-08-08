@@ -106,21 +106,24 @@ public class CourseController {
 	 * @param topic
 	 * @return
 	 * @throws Exception
-	 *  takes course id as a parameter and add the topic
+	 *             takes course id as a parameter and add the topic
 	 */
-	@RequestMapping(value="{courseId}/addtopic",method=RequestMethod.PUT)
-public ResponseEntity<Course>addtopictocourse(@PathVariable("courseId")Integer courseId,@RequestBody Topic topic)throws Exception{
-	return new ResponseEntity<Course>(courseService.addtopictocourse(courseId,topic),HttpStatus.OK);
-}
-/**
- * @param courseId
- * @param topic
- * @return
- * @throws Exception
- *  takes course id as a parameter and delete the topic
- */
-@RequestMapping(value="{courseId}/deletetopic",method=RequestMethod.DELETE)
-public ResponseEntity<Course>deletetopicfromcourse(@PathVariable("courseId")Integer courseId,@RequestBody Topic topic )throws Exception{
-	return new ResponseEntity<Course>(courseService.removetopicfromcourse(courseId, topic),HttpStatus.OK);
-}
+	@RequestMapping(value = "{courseId}/addtopic", method = RequestMethod.PUT)
+	public ResponseEntity<Course> addtopictocourse(@PathVariable("courseId") Integer courseId, @RequestBody Topic topic)
+			throws Exception {
+		return new ResponseEntity<Course>(courseService.addtopictocourse(courseId, topic), HttpStatus.OK);
+	}
+
+	/**
+	 * @param courseId
+	 * @param topic
+	 * @return
+	 * @throws Exception
+	 *             takes course id as a parameter and delete the topic
+	 */
+	@RequestMapping(value = "{courseId}/deletetopic", method = RequestMethod.DELETE)
+	public ResponseEntity<Course> deletetopicfromcourse(@PathVariable("courseId") Integer courseId,
+			@RequestBody Topic topic) throws Exception {
+		return new ResponseEntity<Course>(courseService.removetopicfromcourse(courseId, topic), HttpStatus.OK);
+	}
 }

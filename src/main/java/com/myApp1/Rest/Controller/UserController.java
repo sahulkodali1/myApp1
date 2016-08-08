@@ -74,14 +74,15 @@ public class UserController {
 		}
 		return new ResponseEntity<User>(userService.getDetails(userName), HttpStatus.OK);
 	}
+
 	/**
 	 * @param userName
 	 * @return
 	 * @throws Exception
-	 * method gets all courses for given username
+	 *             method gets all courses for given username
 	 */
-	@RequestMapping(value="userName/getcourses",method=RequestMethod.GET)
-	public ResponseEntity<List<Course>>getcoursesforuser(@PathVariable("userName") String userName )throws Exception{
-		return new ResponseEntity<List<Course>>(userService.getDetails(userName).getCourses(),HttpStatus.OK);
+	@RequestMapping(value = "userName/getcourses", method = RequestMethod.GET)
+	public ResponseEntity<List<Course>> getcoursesforuser(@PathVariable("userName") String userName) throws Exception {
+		return new ResponseEntity<List<Course>>(userService.getDetails(userName).getCourses(), HttpStatus.OK);
 	}
 }

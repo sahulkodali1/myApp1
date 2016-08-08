@@ -19,7 +19,8 @@ public class CourseService {
 	private TopicRepository topicRepository;
 
 	public Course save(Course course) throws Exception {
-		return courseRepository.save(course);
+		return courseRepository.save(course);// what if we have that course
+												// already
 
 	}
 
@@ -57,13 +58,15 @@ public class CourseService {
 		course.getUser().remove(user);
 		return courseRepository.save(course);
 	}
-	public Course addtopictocourse(int courseId,Topic topic)throws Exception{
-		Course course=getDetails(courseId);
+
+	public Course addtopictocourse(int courseId, Topic topic) throws Exception {
+		Course course = getDetails(courseId);
 		course.getTopics().add(topic);
 		return courseRepository.save(course);
 	}
-	public Course removetopicfromcourse(int courseId,Topic topic)throws Exception{
-		Course course=getDetails(courseId);
+
+	public Course removetopicfromcourse(int courseId, Topic topic) throws Exception {
+		Course course = getDetails(courseId);
 		course.getTopics().remove(topic);
 		return courseRepository.save(course);
 	}

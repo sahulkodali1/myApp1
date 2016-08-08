@@ -95,7 +95,6 @@ public class Course implements Serializable {
 	public void setSkillLevel(Skilllevel skillLevel) {
 		this.skillLevel = skillLevel;
 	}
-	
 
 	public List<User> getUser() {
 		return user;
