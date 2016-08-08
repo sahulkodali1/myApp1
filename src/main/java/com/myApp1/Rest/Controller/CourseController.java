@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.myApp1.Model.Course;
+import com.myApp1.Model.Topic;
 import com.myApp1.Service.CourseService;
 
 @RestController
@@ -37,8 +38,8 @@ public class CourseController {
 	 * @throws Exception
 	 *             this is used to delete course by taking courseid
 	 */
-	@RequestMapping(value = "/deletecourse", method = RequestMethod.DELETE)
-	public ResponseEntity<HttpStatus> delete(@PathVariable int courseId) throws Exception {
+	@RequestMapping(value = "/deletecourse/courseId", method = RequestMethod.DELETE)
+	public ResponseEntity<HttpStatus> delete(@PathVariable("courseId") int courseId) throws Exception {
 		courseService.deletecourse(courseId);
 		return new ResponseEntity<HttpStatus>(HttpStatus.OK);
 	}
@@ -49,8 +50,8 @@ public class CourseController {
 	 * @throws Exception
 	 *             used to get all the details about the course
 	 */
-	@RequestMapping(value = "/getcourse", method = RequestMethod.GET)
-	public ResponseEntity<HttpStatus> getdetais(@PathVariable int courseId) throws Exception {
+	@RequestMapping(value = "/getcourse/courseId", method = RequestMethod.GET)
+	public ResponseEntity<HttpStatus> getdetais(@PathVariable("courseId") int courseId) throws Exception {
 		courseService.getDetails(courseId);
 		return new ResponseEntity<HttpStatus>(HttpStatus.OK);
 	}
@@ -85,16 +86,41 @@ public class CourseController {
 			@PathVariable("userName") String userName) throws Exception {
 		return new ResponseEntity<Course>(courseService.addusertocourse(courseId, userName), HttpStatus.OK);
 	}
+
 	/**
 	 * @param courseId
 	 * @param userName
 	 * @return
 	 * @throws Exception
-	 *    this method takes courseId and userName as parameters and remove from course
+	 *             this method takes courseId and userName as parameters and
+	 *             remove from course
 	 */
-	@RequestMapping(value="{courseId}/remove{userName}",method=RequestMethod.DELETE)
-	public ResponseEntity<Course>deleteuserfromcourse(@PathVariable ("courseId") Integer courseId,@PathVariable ("userName") String userName )throws Exception{
-		return new ResponseEntity<Course>(courseService.deleteuserfromcourse(courseId, userName),HttpStatus.OK);
+	@RequestMapping(value = "{courseId}/remove{userName}", method = RequestMethod.DELETE)
+	public ResponseEntity<Course> deleteuserfromcourse(@PathVariable("courseId") Integer courseId,
+			@PathVariable("userName") String userName) throws Exception {
+		return new ResponseEntity<Course>(courseService.deleteuserfromcourse(courseId, userName), HttpStatus.OK);
 	}
 
+	/**
+	 * @param courseId
+	 * @param topic
+	 * @return
+	 * @throws Exception
+	 *  takes course id as a parameter and add the topic
+	 */
+	@RequestMapping(value="{courseId}/addtopic",method=RequestMethod.PUT)
+public ResponseEntity<Course>addtopictocourse(@PathVariable("courseId")Integer courseId,@RequestBody Topic topic)throws Exception{
+	return new ResponseEntity<Course>(courseService.addtopictocourse(courseId,topic),HttpStatus.OK);
+}
+/**
+ * @param courseId
+ * @param topic
+ * @return
+ * @throws Exception
+ *  takes course id as a parameter and delete the topic
+ */
+@RequestMapping(value="{courseId}/deletetopic",method=RequestMethod.DELETE)
+public ResponseEntity<Course>deletetopicfromcourse(@PathVariable("courseId")Integer courseId,@RequestBody Topic topic )throws Exception{
+	return new ResponseEntity<Course>(courseService.removetopicfromcourse(courseId, topic),HttpStatus.OK);
+}
 }
