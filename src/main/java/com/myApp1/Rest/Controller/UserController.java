@@ -1,5 +1,7 @@
 package com.myApp1.Rest.Controller;
 
+import java.util.List;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.myApp1.Model.Course;
 import com.myApp1.Model.User;
 import com.myApp1.Service.UserService;
 
@@ -70,5 +73,15 @@ public class UserController {
 			userName += ".com";
 		}
 		return new ResponseEntity<User>(userService.getDetails(userName), HttpStatus.OK);
+	}
+	/**
+	 * @param userName
+	 * @return
+	 * @throws Exception
+	 * method gets all courses for given username
+	 */
+	@RequestMapping(value="userName/getcourses",method=RequestMethod.GET)
+	public ResponseEntity<List<Course>>getcoursesforuser(@PathVariable("userName") String userName )throws Exception{
+		return new ResponseEntity<List<Course>>(userService.getDetails(userName).getCourses(),HttpStatus.OK);
 	}
 }

@@ -4,11 +4,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.myApp1.Exception.CourseNotFound;
 import com.myApp1.Model.Course;
+import com.myApp1.Model.User;
 import com.myApp1.Repositories.CourseRepository;
+import com.myApp1.Repositories.UserRepository;
 
 public class CourseService {
 	@Autowired
 	private CourseRepository courseRepository;
+	@Autowired
+	private UserRepository userRepository;
 	
 	public Course save(Course course)throws Exception{
 		return courseRepository.save(course);
@@ -23,19 +27,36 @@ public class CourseService {
 			throw new CourseNotFound("delete operation for "+courseId+" is failed");
 		
 	}
-	public void getDetails(int courseId)throws Exception{
+	public Course getDetails(int courseId)throws Exception{
 		Course course=courseRepository.findOne(courseId);
-		if(course!=null){
-			 courseRepository.findOne(courseId);	
+		if(course==null){
+			 	
+			 throw new CourseNotFound("search operation for "+courseId+" is failed");
 				
 		}else
 		{
-			throw new CourseNotFound("search operation for "+courseId+" is failed");
+			 return courseRepository.getOne(courseId);
+		}
+		
+		
+			
+		}
+		public Course addusertocourse(int courseId, String userName) throws Exception{
+			Course course = getDetails(courseId);
+			User user = userRepository.findOne(userName);
+			course.getUser().add(user);
+			return courseRepository.save(course);
+		}
+		public Course deleteuserfromcourse(int courseId,String userName)throws Exception{
+			Course course=getDetails(courseId);
+			User user=userRepository.getOne(userName);
+			course.getUser().remove(user);
+			return courseRepository.save(course);
 		}
 	
 	
 	}
-}
+
 
 
 
